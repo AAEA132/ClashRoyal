@@ -1,4 +1,5 @@
 package Controller;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,7 +105,7 @@ public class LoginPageController {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connectDB = databaseConnection.getConnection();
 
-        String verifyLogin = "select count(1) from user_account where username = '" + usernameField.getText() + "' and password = '" + passField.getText() + "'";
+        String verifyLogin = "select count(1) from users where username = '" + usernameField.getText() + "' and password = '" + passField.getText() + "'";
 
         try {
             Statement statement = connectDB.createStatement();
@@ -113,6 +114,7 @@ public class LoginPageController {
             while (queryResult.next()){
                 if (queryResult.getInt(1) == 1){
                     loginLabel.setText("Congrats!");
+                    User.username = usernameField.getText();
                     Stage stage;
                     Parent root;
                     stage = (Stage) signUpLink.getScene().getWindow();

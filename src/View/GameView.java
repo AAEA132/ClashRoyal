@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import Model.GameModel.CellValue;
 
 public class GameView extends Group{
-    public final static double CELL_WIDTH = 30.0;
+    public final static double CELL_WIDTH = 19.0;
 
     private int rowCount;
     private int columnCount;

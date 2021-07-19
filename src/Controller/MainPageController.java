@@ -32,7 +32,26 @@ public class MainPageController {
         if (event.getSource() == trainingCampButton) {
             startTrainingCamp();
         }
+        else if (event.getSource() == battleDeckButton){
+            battleDeck();
+        }
     }
+
+    private void battleDeck() {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) battleDeckButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../View/battledeckpage.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     protected void startTrainingCamp() throws IOException {
         Stage stage;
 //        Parent root;
@@ -56,7 +75,7 @@ public class MainPageController {
         System.out.println(controller.getBoardHeight());
         double sceneWidth = controller.getBoardWidth() + 20.0;
         double sceneHeight = controller.getBoardHeight() + 70.0;
-        stage.setScene(new Scene(root, sceneWidth, sceneHeight));
+        stage.setScene(new Scene(root, 500, 750));
         stage.show();
         root.requestFocus();
     }

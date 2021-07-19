@@ -125,13 +125,13 @@ public class SignUpController {
         }
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connectDB= databaseConnection.getConnection();
-        String firstname = "test";
-        String lastname = "test";
+//        String firstname = "test";
+//        String lastname = "test";
         String username = usernameField.getText();
         String password = passField.getText();
 
-        String insertFields = "INSERT INTO user_account (firstname, lastname, username, password) VALUES ('";
-        String insertValues = firstname + "','" + lastname + "','" + username + "','" + password + "')";
+        String insertFields = "INSERT INTO users (username, password) VALUES ('";
+        String insertValues = username + "','" + password + "')";
         String insertToRegister = insertFields + insertValues;
 
         try {

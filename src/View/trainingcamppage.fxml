@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+
 <?import View.GameView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameController">
    <top>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="39.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <left>
             <Label text="Label" BorderPane.alignment="CENTER" />
          </left>
@@ -18,7 +22,34 @@
          </center>
       </BorderPane>
    </top>
-    <center>
-        <GameView fx:id="gameView" rowCount="32" columnCount="18" />
-    </center>
+   <center>
+      <GameView fx:id="gameView" rowCount="32" columnCount="18" onDragDropped="#dragDroppedHandler" onDragOver="#dragOverHandler" pickOnBounds="true" />
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="117.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="nextCard" fitHeight="65.0" fitWidth="55.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photos/Card/arrows.png" />
+               </image></ImageView>
+            <ImageView fx:id="readyCard4" fitHeight="100.0" fitWidth="74.0" layoutX="312.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photos/Card/archers.png" />
+               </image></ImageView>
+            <ImageView fx:id="readyCard3" fitHeight="100.0" fitWidth="74.0" layoutX="238.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photos/Card/archers.png" />
+               </image></ImageView>
+            <ImageView fx:id="readyCard1" fitHeight="100.0" fitWidth="74.0" layoutX="90.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photos/Card/archers.png" />
+               </image></ImageView>
+            <ImageView fx:id="readyCard2" fitHeight="100.0" fitWidth="74.0" layoutX="164.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Photos/Card/archers.png" />
+               </image></ImageView>
+         </children>
+      </AnchorPane>
+   </bottom>
+
 </BorderPane>

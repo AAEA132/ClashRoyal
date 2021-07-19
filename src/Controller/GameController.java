@@ -1,11 +1,14 @@
 package Controller;
 
 import Model.GameModel;
+import Model.User;
 import View.GameView;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,6 +20,32 @@ public class GameController {
     private boolean paused;
     private static final String mapFile = "src/Map/map.txt";
     private GameModel gameModel;
+
+    @FXML
+    private ImageView nextCard;
+
+    @FXML
+    private ImageView readyCard4;
+
+    @FXML
+    private ImageView readyCard3;
+
+    @FXML
+    private ImageView readyCard1;
+
+    @FXML
+    private ImageView readyCard2;
+
+    @FXML
+    void onDragDetectedHandler(MouseEvent event) {
+        ImageView imageView = (ImageView) event.getSource();
+//        srcId = imageView.getId();
+        Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent clipboardContent = new ClipboardContent();
+        clipboardContent.putImage(imageView.getImage());
+        dragboard.setContent(clipboardContent);
+        event.consume();
+    }
 
     public GameController() {
         this.paused = false;
@@ -87,5 +116,26 @@ public class GameController {
 
     public double getBoardHeight() {
         return GameView.CELL_WIDTH * this.gameView.getRowCount();
+    }
+
+    public void dragDroppedHandler(DragEvent event) {
+        //                List<File> files = event.getDragboard().getFiles();
+        try {
+//                        Image image = new Image(new FileInputStream(files.get(0)));
+            Image image = event.getDragboard().getImage();
+            ImageView imageView = (ImageView) event.getTarget();
+            imageView.setImage(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        event.consume();
+    }
+
+    public void dragOverHandler(DragEvent event) {
+        if (event.getDragboard().hasImage()) {
+            event.acceptTransferModes(TransferMode.ANY);
+        }
+        event.consume();
     }
 }

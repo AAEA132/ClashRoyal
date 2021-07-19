@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<?import com.gluonhq.charm.glisten.mvc.View?>-->
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="anchor" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainPageController">
+   <stylesheets>
+      <URL value="@main.css" />
+   </stylesheets>
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="400.0">
+         <image>
+            <Image url="@../Photos/mainbackground.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="profileBotton" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Profile">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="battleDeckButton" layoutX="125.0" layoutY="155.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Battle Deck">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="battleHistoryButton" layoutX="125.0" layoutY="226.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Battle History">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="trainingCampButton" layoutX="125.0" layoutY="300.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Training Camp">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+      <Button fx:id="battleBotton" layoutX="125.0" layoutY="372.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="1v1">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,40 @@
+.label{
+        -fx-text-fill: blue;
+        -fx-font-size: 20;
+}
+.label2{
+        -fx-text-fill: red;
+        -fx-font-size: 12;
+}
+.button{
+    -fx-font-weight: bold;
+    -fx-background-color: #69d1f0;
+    -fx-text-fill: white;
+    -fx-font-size: 18;
+}
+
+.button2{
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-font-family:"Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 23;
+    -fx-text-fill: #828282;
+
+}
+
+.button2:focused {
+    -fx-border-color: transparent, black;
+    -fx-border-width: 2, 2;
+    -fx-border-style: solid, segments(1, 2);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button2:pressed {
+    -fx-border-color: transparent, black;
+    -fx-border-width: 2, 2;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}

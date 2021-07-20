@@ -19,7 +19,7 @@
             <Image url="@../Photos/mainbackground.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="profileBotton" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Profile">
+      <Button fx:id="profileBotton" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Profile">
          <font>
             <Font size="25.0" />
          </font>

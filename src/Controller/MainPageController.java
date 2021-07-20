@@ -35,6 +35,24 @@ public class MainPageController {
         else if (event.getSource() == battleDeckButton){
             battleDeck();
         }
+        else if (event.getSource() == profileBotton){
+            profile();
+        }
+    }
+
+    private void profile() {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) profileBotton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../View/profilepage.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
     private void battleDeck() {

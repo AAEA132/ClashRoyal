@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +16,7 @@
             <Label text="Label" BorderPane.alignment="CENTER" />
          </left>
          <right>
-            <Label text="Label" BorderPane.alignment="CENTER" />
+            <Label fx:id="timerLabel" text="Label" BorderPane.alignment="CENTER" />
          </right>
          <center>
             <Label text="Label" BorderPane.alignment="CENTER" />
@@ -28,26 +29,28 @@
    <bottom>
       <AnchorPane prefHeight="117.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="nextCard" fitHeight="65.0" fitWidth="55.0" layoutX="14.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="nextCard" fitHeight="65.0" fitWidth="55.0" layoutX="14.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Photos/Card/arrows.png" />
                </image></ImageView>
-            <ImageView fx:id="readyCard4" fitHeight="100.0" fitWidth="74.0" layoutX="312.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="readyCard4" fitHeight="100.0" fitWidth="74.0" layoutX="311.0" layoutY="2.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Photos/Card/archers.png" />
                </image></ImageView>
-            <ImageView fx:id="readyCard3" fitHeight="100.0" fitWidth="74.0" layoutX="238.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="readyCard3" fitHeight="100.0" fitWidth="74.0" layoutX="237.0" layoutY="2.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Photos/Card/archers.png" />
                </image></ImageView>
-            <ImageView fx:id="readyCard1" fitHeight="100.0" fitWidth="74.0" layoutX="90.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="readyCard1" fitHeight="100.0" fitWidth="74.0" layoutX="90.0" layoutY="2.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Photos/Card/archers.png" />
                </image></ImageView>
-            <ImageView fx:id="readyCard2" fitHeight="100.0" fitWidth="74.0" layoutX="164.0" layoutY="13.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="readyCard2" fitHeight="100.0" fitWidth="74.0" layoutX="163.0" layoutY="2.0" onDragDetected="#onDragDetectedHandler" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Photos/Card/archers.png" />
                </image></ImageView>
+            <ProgressBar fx:id="elixirBar" focusTraversable="false" layoutX="94.0" layoutY="94.0" prefHeight="18.0" prefWidth="290.0" progress="0.0" />
+            <Label fx:id="elixirLabel" layoutX="79.0" layoutY="95.0" text="0" textAlignment="CENTER" textFill="#6b1e9e" />
          </children>
       </AnchorPane>
    </bottom>

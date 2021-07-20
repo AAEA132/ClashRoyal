@@ -119,30 +119,54 @@ public class BattleDeckPageController {
                                 else if (card8.getId().equals(cardI))
                                         card = card8;
 
-                                if (User.cards[i] == 1)
+                                if (User.cards[i] == 1) {
                                         card.setImage(archerCard.getImage());
-                                else if (User.cards[i] == 2)
+                                        archerCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 2) {
                                         card.setImage(arrowCard.getImage());
-                                else if (User.cards[i] == 3)
+                                        arrowCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 3) {
                                         card.setImage(babyDragonCard.getImage());
-                                else if (User.cards[i] == 4)
+                                        babyDragonCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 4) {
                                         card.setImage(barbariansCard.getImage());
-                                else if (User.cards[i] == 5)
+                                        barbariansCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 5) {
                                         card.setImage(cannonCard.getImage());
-                                else if (User.cards[i] == 6)
+                                        cannonCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 6) {
                                         card.setImage(fireballCard.getImage());
-                                else if (User.cards[i] == 7)
+                                        fireballCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 7) {
                                         card.setImage(giantCard.getImage());
-                                else if (User.cards[i] == 8)
+                                        giantCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 8) {
                                         card.setImage(infernoTowerCard.getImage());
-                                else if (User.cards[i] == 9)
+                                        infernoTowerCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 9) {
                                         card.setImage(miniPEKKACard.getImage());
-                                else if (User.cards[i] == 10)
+                                        miniPEKKACard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 10) {
                                         card.setImage(wizardCard.getImage());
-                                else if (User.cards[i] == 11)
+                                        wizardCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 11) {
                                         card.setImage(valkyrieCard.getImage());
-                                else if (User.cards[i] == 12)
+                                        valkyrieCard.setDisable(true);
+                                }
+                                else if (User.cards[i] == 12) {
                                         card.setImage(rageCard.getImage());
+                                        rageCard.setDisable(true);
+                                }
                         }
 //                        resultSet.next();
 //                        User.cards[0] = resultSet.getInt("card1");

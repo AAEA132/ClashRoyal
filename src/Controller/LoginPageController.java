@@ -1,4 +1,5 @@
 package Controller;
+import Model.SoundPlayer;
 import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +11,11 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -117,6 +121,7 @@ public class LoginPageController {
                     User.username = usernameField.getText();
                     Stage stage;
                     Parent root;
+                    SoundPlayer.initializeGameSounds();
                     stage = (Stage) signUpLink.getScene().getWindow();
                     root = FXMLLoader.load(getClass().getResource("../View/mainpage.fxml"));
                     Scene scene = new Scene(root);

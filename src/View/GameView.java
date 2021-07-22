@@ -1,5 +1,6 @@
 package View;
 
+import Model.Characters.GameCharacter;
 import Model.GameModel;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +8,8 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import Model.GameModel.CellValue;
+
+import java.util.ArrayList;
 
 public class GameView extends Group{
     public final static double CELL_WIDTH = 19.0;
@@ -55,15 +58,17 @@ public class GameView extends Group{
      * Constructs an empty grid of ImageViews
      */
     private void initializeGrid() {
-        cellViews = new ImageView[rowCount][columnCount];
-        for (int row = 0; row < rowCount; row++) {
-            for (int column = 0; column < columnCount; column++) {
+        cellViews = new ImageView[columnCount][rowCount];
+        for (int column = 0; column < columnCount; column++) {
+            for (int row = 0; row < rowCount; row++) {
+                String id = column+"#"+row;
                 ImageView imageView = new ImageView();
+                imageView.setId(id);
                 imageView.setX(column * CELL_WIDTH);
                 imageView.setY(row * CELL_WIDTH);
                 imageView.setFitWidth(CELL_WIDTH);
                 imageView.setFitHeight(CELL_WIDTH);
-                cellViews[row][column] = imageView;
+                cellViews[column][row] = imageView;
                 this.getChildren().add(imageView);
             }
         }
@@ -74,27 +79,37 @@ public class GameView extends Group{
      * @param gameModel
      */
     public void update(GameModel gameModel) {
+        ArrayList<GameCharacter> gameCharacters = gameModel.getGameCharacters();
         //for each ImageView, set the image to correspond with the CellValue of that cell
-        for (int row = 0; row < rowCount; row++){
-            for (int column = 0; column < columnCount; column++){
-                CellValue value = gameModel.getCellValue(row, column);
+        for (int column = 0; column < columnCount; column++){
+            for (int row = 0; row < rowCount; row++){
+                CellValue value = gameModel.getCellValue(column,row);
                 if (value == CellValue.LIGHT_GRASS) {
-                    cellViews[row][column].setImage(lightGrassImage);
+                    cellViews[column][row].setImage(lightGrassImage);
                 }
                 else if (value == CellValue.DARK_GRASS) {
-                    cellViews[row][column].setImage(darkGrassImage);
+                    cellViews[column][row].setImage(darkGrassImage);
                 }
                 else if (value == CellValue.ROAD) {
-                    cellViews[row][column].setImage(roadImage);
+                    cellViews[column][row].setImage(roadImage);
                 }
                 else if (value == CellValue.RIVER) {
-                    cellViews[row][column].setImage(riverImage);
+                    cellViews[column][row].setImage(riverImage);
                 }
                 else if (value == CellValue.BRIDGE) {
-                    cellViews[row][column].setImage(bridgeImage);
+                    cellViews[column][row].setImage(bridgeImage);
                 }
                 else {
-                    cellViews[row][column].setImage(null);
+                    cellViews[column][row].setImage(null);
+                }
+
+                if (!gameCharacters.isEmpty()) {
+                    for (GameCharacter gameCharacter : gameCharacters) {
+                        if (gameCharacter != null && column == gameCharacter.getCharacterLocation().getX() && row == gameCharacter.getCharacterLocation().getY()) {
+                            gameCharacter.getImageView().setX(cellViews[column][row].getX());
+                            gameCharacter.getImageView().setY(cellViews[column][row].getY());
+                        }
+                    }
                 }
 //                //check which direction PacMan is going in and display the corresponding image
 //                if (row == model.getPacmanLocation().getX() && column == model.getPacmanLocation().getY()) {

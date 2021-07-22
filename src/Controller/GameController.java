@@ -1,10 +1,12 @@
 package Controller;
 
+import Model.Characters.GameCharacter;
 import Model.GameModel;
 import Model.User;
 import View.GameView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -262,6 +264,7 @@ public class GameController {
             }
             counter = 0;
         }
+        this.gameModel.moveCharacters();
         this.gameView.update(gameModel);
 //        this.pacManModel.step(direction);
 //        this.pacManView.update(pacManModel);!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -302,14 +305,31 @@ public class GameController {
 
 //                        Image image = new Image(new FileInputStream(files.get(0)));
 
-            if ((elixirAmountDivideBy10.doubleValue()*10) >= getCost(srcId)) {
+            ImageView tile = (ImageView) event.getTarget();
+
+            String[] tokens = tile.getId().split("#");
+            if ((elixirAmountDivideBy10.doubleValue()*10) >= getCost(srcId) && gameModel.isDroppableUser(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]))) {
                 elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",elixirAmountDivideBy10.doubleValue() - (((double)getCost(srcId))/10)));
                 elixirBar.setProgress(elixirAmountDivideBy10.doubleValue());
                 elixirLabel.setText(Integer.toString((int) Math.round(elixirAmountDivideBy10.doubleValue() * 10)));
 
+
+
+
+
 //                elixirLabel.setText(getCost(srcId) + "");
                 Image image = event.getDragboard().getImage();
                 ImageView imageView = new ImageView(image);
+
+
+                GameCharacter gameCharacter = new GameCharacter(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                if (Integer.parseInt(tokens[0]) > 8){
+                    gameModel.addToRight(gameCharacter);
+                }
+                else {
+                    gameModel.addToLeft(gameCharacter);
+                }
+
 //            ImageView imageView = (ImageView) event.getTarget();
 //            imageView.setImage(image);
                 imageView.setX((event.getX() - 15));

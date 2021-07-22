@@ -24,7 +24,7 @@
       </BorderPane>
    </top>
    <center>
-      <GameView fx:id="gameView" rowCount="32" columnCount="18" onDragDropped="#dragDroppedHandler" onDragOver="#dragOverHandler" pickOnBounds="true" />
+      <GameView fx:id="gameView" columnCount="18" rowCount="32"  onDragDropped="#dragDroppedHandler" onDragOver="#dragOverHandler" pickOnBounds="true" />
    </center>
    <bottom>
       <AnchorPane prefHeight="117.0" prefWidth="400.0" BorderPane.alignment="CENTER">

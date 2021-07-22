@@ -15,7 +15,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(icon);
 
         Scene scene = new Scene(root, 400, 600);
-        scene.getStylesheets().add("View/Styles.css");
+//        scene.getStylesheets().add("View/Styles.css");
         primaryStage.setTitle("Clash Royale");
         primaryStage.setResizable (false);
         primaryStage.setScene(scene);

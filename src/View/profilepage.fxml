@@ -6,16 +6,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProfilePageController">
    <children>
-      <Label layoutX="132.0" layoutY="30.0" text="Player Profile" textFill="#204dec">
+      <ImageView fitHeight="600.0" fitWidth="400.0">
+         <image>
+            <Image url="@../Photos/tiled-background-silver.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="200.0" layoutX="100.0" layoutY="23.0">
+         <image>
+            <Image url="@../Photos/playerProfile.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" layoutX="61.0" layoutY="95.0" style="-fx-background-color: #f1fafa; -fx-background-radius: 10;">
          <font>
-            <Font name="Arial" size="23.0" />
-         </font>
-      </Label>
-      <Label fx:id="username" layoutX="14.0" layoutY="95.0" prefHeight="32.0" prefWidth="73.0" />
-      <ImageView fx:id="level" fitHeight="32.0" fitWidth="36.0" layoutX="14.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
+            <Font size="25.0" />
+         </font></Label>
+      <ImageView fx:id="level" fitHeight="36.0" fitWidth="36.0" layoutX="14.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photos/0.png" />
+         </image></ImageView>
       <ImageView fx:id="card1" fitHeight="112.0" fitWidth="94.0" layoutX="14.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="card2" fitHeight="112.0" fitWidth="94.0" layoutX="105.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="card3" fitHeight="112.0" fitWidth="94.0" layoutX="200.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
@@ -24,18 +34,23 @@
       <ImageView fx:id="card6" fitHeight="112.0" fitWidth="94.0" layoutX="105.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="card7" fitHeight="112.0" fitWidth="94.0" layoutX="200.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="card8" fitHeight="112.0" fitWidth="94.0" layoutX="291.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="56.0" layoutX="263.0" layoutY="241.0">
+         <image>
+            <Image url="@../Photos/cards.png" />
+         </image>
+      </ImageView>
       <Label layoutX="141.0" layoutY="255.0" text="Battle Deck" textFill="#204dec">
          <font>
             <Font name="Arial" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="32.0" layoutY="547.0" text="Average elexir cost:" textFill="#a110c1">
+      <Label layoutX="19.0" layoutY="546.0" text="Average elexir cost:" textFill="#a110c1">
          <font>
-            <Font size="16.0" />
+            <Font name="Arial Bold" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="avgElixirCostLabel" layoutX="178.0" layoutY="546.0" prefHeight="26.0" prefWidth="36.0" />
-      <ImageView fitHeight="26.0" fitWidth="20.0" layoutX="204.0" layoutY="547.0">
+      <Label fx:id="avgElixirCostLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="208.0" layoutY="548.0" />
+      <ImageView fitHeight="26.0" fitWidth="20.0" layoutY="544.0">
          <image>
             <Image url="@../Photos/elixir.png" />
          </image>

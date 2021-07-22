@@ -16,32 +16,32 @@
    <children>
       <ImageView fitHeight="600.0" fitWidth="400.0">
          <image>
-            <Image url="@../Photos/mainbackground.jpg" />
+            <Image url="@../Photos/loading_screen_the_flood_4k.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="profileBotton" layoutX="125.0" layoutY="84.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Profile">
+      <Button fx:id="profileBotton" layoutX="25.0" layoutY="127.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Profile" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="battleDeckButton" layoutX="125.0" layoutY="155.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Battle Deck">
+      <Button fx:id="battleDeckButton" layoutX="223.0" layoutY="127.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Battle Deck" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="battleHistoryButton" layoutX="125.0" layoutY="226.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Battle History">
+      <Button fx:id="battleHistoryButton" layoutX="25.0" layoutY="210.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Battle History" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="trainingCampButton" layoutX="125.0" layoutY="300.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="Training Camp">
+      <Button fx:id="trainingCampButton" layoutX="223.0" layoutY="210.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Training Camp" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="battleBotton" layoutX="125.0" layoutY="372.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="button2" stylesheets="@Styles.css" text="1v1">
+      <Button fx:id="battleBotton" layoutX="125.0" layoutY="292.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="1v1" textFill="WHITE">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial" size="20.0" />
          </font>
       </Button>
    </children>

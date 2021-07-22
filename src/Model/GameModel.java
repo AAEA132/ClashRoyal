@@ -1,11 +1,26 @@
 package Model;
 
+import Model.Characters.GameCharacter;
+import javafx.geometry.Point2D;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameModel {
+    private Point2D leftFirstDestinationUser = new Point2D(3,17);
+    private Point2D rightFirstDestinationUser = new Point2D(14, 17);
 
+    private Point2D leftSecondDestinationUser = new Point2D(3,5);
+    private Point2D rightSecondDestinationUser = new Point2D(14, 5);
+
+    private Point2D leftThirdDestinationUser = new Point2D(8, 0);
+    private Point2D rightThirdDestinationUser = new Point2D(9, 0);
+
+    private ArrayList<GameCharacter> gameCharacters;
+    private ArrayList<GameCharacter> gameCharactersRight;
+    private ArrayList<GameCharacter> gameCharactersLeft;
 
     public enum CellValue {
         EMPTY, LIGHT_GRASS, DARK_GRASS, ROAD, RIVER, BRIDGE
@@ -14,11 +29,15 @@ public class GameModel {
     private int rowCount;
     private int columnCount;
     private CellValue[][] grid;
+    private boolean[][] userPossibleCardDrop;
     private static boolean gameOver;
     private static boolean youWon;
 
 
     public GameModel() {
+        gameCharacters = new ArrayList<>();
+        gameCharactersRight = new ArrayList<>();
+        gameCharactersLeft = new ArrayList<>();
         this.startNewGame();
     }
 
@@ -47,7 +66,7 @@ public class GameModel {
             e.printStackTrace();
         }
 
-        grid = new CellValue[rowCount][columnCount];
+        grid = new CellValue[columnCount][rowCount];
         int row = 0;
 //        int pacmanRow = 0;
 //        int pacmanColumn = 0;
@@ -87,10 +106,19 @@ public class GameModel {
                         thisValue = CellValue.EMPTY;
                         break;
                 }
-                grid[row][column] = thisValue;
+                grid[column][row] = thisValue;
                 column++;
             }
             row++;
+        }
+        userPossibleCardDrop = new boolean[columnCount][rowCount];
+        for (int columnC = 0; columnC < columnCount; columnC++) {
+            for (int rowC = 0; rowC < rowCount; rowC++) {
+                if (rowC<=16)
+                    userPossibleCardDrop[columnC][rowC] = false;
+                else
+                    userPossibleCardDrop[columnC][rowC] = true;
+            }
         }
 //        pacmanLocation = new Point2D(pacmanRow, pacmanColumn);
 //        pacmanVelocity = new Point2D(0,0);
@@ -101,19 +129,61 @@ public class GameModel {
 //        currentDirection = Direction.NONE;
 //        lastDirection = Direction.NONE;
     }
-
+    public void moveCharacters() {
+        for (GameCharacter gameCharacter : gameCharactersLeft) {
+            gameCharacter.moveCharacter();
+            if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationUser)){
+                gameCharacter.setDestination(leftSecondDestinationUser);
+            }
+            else if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationUser)){
+                gameCharacter.setDestination(leftThirdDestinationUser);
+            }
+        }
+        for (GameCharacter gameCharacter : gameCharactersRight) {
+            gameCharacter.moveCharacter();
+            if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationUser)){
+                gameCharacter.setDestination(rightSecondDestinationUser);
+            }
+            else if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationUser)){
+                gameCharacter.setDestination(rightThirdDestinationUser);
+            }
+        }
+    }
+    public void addToRight(GameCharacter gameCharacter){
+        gameCharacter.setDestination(rightFirstDestinationUser);
+        gameCharactersRight.add(gameCharacter);
+        gameCharacters.add(gameCharacter);
+    }
+    public void addToLeft(GameCharacter gameCharacter){
+        gameCharacter.setDestination(leftFirstDestinationUser);
+        gameCharactersLeft.add(gameCharacter);
+        gameCharacters.add(gameCharacter);
+    }
 
     /**
      * @param row
      * @param column
      * @return the Cell Value of cell (row, column)
      */
-    public CellValue getCellValue(int row, int column) {
-        assert row >= 0 && row < this.grid.length && column >= 0 && column < this.grid[0].length;
-        return this.grid[row][column];
+    public CellValue getCellValue(int column, int row) {
+        assert column >= 0 && column < this.grid.length && row >= 0 && row < this.grid[0].length;
+        return this.grid[column][row];
     }
     public static boolean isYouWon() {
         return youWon;
     }
 
+    public boolean isMoveAble(int column, int row){
+        if (getCellValue(column,row) == CellValue.RIVER)
+            return false;
+        return true;
+    }
+
+    public ArrayList<GameCharacter> getGameCharacters() {
+        return gameCharacters;
+    }
+
+    public boolean isDroppableUser(int column, int row){
+        return userPossibleCardDrop[column][row];
+    }
 }

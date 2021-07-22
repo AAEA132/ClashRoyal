@@ -1,9 +1,9 @@
-L D L R L D R R R R R R L D R D L D
+L D L R L D R R A R R R L D R D L D
 D L D R D L R R R R R R D L R L D L
 L D L R L D L D L D L D L D R D L D
 D R R R R R D L D L D L R R R R R L
 L R L R L R L D L D L D R D R D R D
-D R D R D R D L D L D L R L R L R L
+D R D E D R D L D L D L R L E L R L
 L R L R L R L D L D L D R D R D R D
 D R R R R R D L D L D L R R R R R L
 L D L R L D L D L D L D L D R D L D
@@ -24,9 +24,9 @@ D L D R D L D L D L D L D L R L D L
 L D L R L D L D L D L D L D R D L D
 D R R R R R D L D L D L R R R R R L
 L R L R L R L D L D L D R D R D R D
-D R D R D R D L D L D L R L R L R L
+D R D T D R D L D L D L R L T L R L
 L R L R L R L D L D L D R D R D R D
 D R R R R R D L D L D L R R R R R L
 L D L R L D L D L D L D L D R D L D
 D L D R D L R R R R R R D L R L D L
-L D L R L D R R R R R R L D R D L D
+L D L R L D R R K R R R L D R D L D

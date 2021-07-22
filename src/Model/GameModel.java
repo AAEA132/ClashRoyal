@@ -2,46 +2,69 @@ package Model;
 
 import Model.Characters.GameCharacter;
 import javafx.geometry.Point2D;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The type Game model.
+ */
 public class GameModel {
     private Point2D leftFirstDestinationUser = new Point2D(3,17);
     private Point2D rightFirstDestinationUser = new Point2D(14, 17);
-
     private Point2D leftSecondDestinationUser = new Point2D(3,5);
     private Point2D rightSecondDestinationUser = new Point2D(14, 5);
-
     private Point2D leftThirdDestinationUser = new Point2D(8, 0);
     private Point2D rightThirdDestinationUser = new Point2D(9, 0);
 
-
     private Point2D leftFirstDestinationBot = new Point2D(3,14);
     private Point2D rightFirstDestinationBot= new Point2D(14, 14);
-
     private Point2D leftSecondDestinationBot = new Point2D(3,26);
     private Point2D rightSecondDestinationBot = new Point2D(14, 26);
-
     private Point2D leftThirdDestinationBot = new Point2D(8, 31);
     private Point2D rightThirdDestinationBot = new Point2D(9, 31);
 
     private ArrayList<GameCharacter> gameCharacters;
     private ArrayList<GameCharacter> gameCharactersRight;
     private ArrayList<GameCharacter> gameCharactersLeft;
-
     private ArrayList<GameCharacter> gameCharactersRightUser;
     private ArrayList<GameCharacter> gameCharactersLeftUser;
-
     private ArrayList<GameCharacter> gameCharactersRightBot;
     private ArrayList<GameCharacter> gameCharactersLeftBot;
 
-
-
+    /**
+     * The enum Cell value.
+     */
     public enum CellValue {
-        EMPTY, LIGHT_GRASS, DARK_GRASS, ROAD, RIVER, BRIDGE
+        /**
+         * Empty cell value.
+         */
+        EMPTY,
+        /**
+         * Light grass cell value.
+         */
+        LIGHT_GRASS,
+        /**
+         * Dark grass cell value.
+         */
+        DARK_GRASS,
+        /**
+         * Road cell value.
+         */
+        ROAD,
+        /**
+         * River cell value.
+         */
+        RIVER,
+        /**
+         * Bridge cell value.
+         */
+        BRIDGE,
+        USER_TOWER,
+        BOT_TOWER,
+        BOT_KING,
+        USER_KING
     };
 
     private int rowCount;
@@ -52,21 +75,19 @@ public class GameModel {
     private static boolean gameOver;
     private static boolean youWon;
 
-
+    /**
+     * Instantiates a new Game model.
+     */
     public GameModel() {
         gameCharacters = new ArrayList<>();
         gameCharactersRight = new ArrayList<>();
         gameCharactersLeft = new ArrayList<>();
-
         gameCharactersRightUser = new ArrayList<>();
         gameCharactersLeftUser = new ArrayList<>();
-
         gameCharactersRightBot = new ArrayList<>();
         gameCharactersLeftBot = new ArrayList<>();
-
         this.startNewGame();
     }
-
     private void startNewGame() {
         gameOver = false;
         youWon = false;
@@ -74,9 +95,7 @@ public class GameModel {
     }
 
     /**
-     * Configure the grid CellValues based on the txt file and place PacMan and ghosts at their starting locations.
-     * "W" indicates a wall, "E" indicates an empty square, "B" indicates a big dot, "S" indicates
-     * a small dot, "1" or "2" indicates the ghosts home, and "P" indicates Pacman's starting position.
+     * Configure the grid CellValues based on the txt file
      *
      * @param fileName txt file containing the board configuration
      */
@@ -91,15 +110,8 @@ public class GameModel {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         grid = new CellValue[columnCount][rowCount];
         int row = 0;
-//        int pacmanRow = 0;
-//        int pacmanColumn = 0;
-//        int ghost1Row = 0;
-//        int ghost1Column = 0;
-//        int ghost2Row = 0;
-//        int ghost2Column = 0;
         while(sc.hasNextLine()){
             int column = 0;
             String line= sc.nextLine();
@@ -123,11 +135,18 @@ public class GameModel {
                     case "L":
                         thisValue = CellValue.LIGHT_GRASS;
                         break;
-//                    case "P":
-//                        thisValue = CellValue.PACMANHOME;
-//                        pacmanRow = row;
-//                        pacmanColumn = column;
-//                        break;
+                    case "E":
+                        thisValue = CellValue.BOT_TOWER;
+                        break;
+                    case "T":
+                        thisValue = CellValue.USER_TOWER;
+                        break;
+                    case "K":
+                        thisValue = CellValue.USER_KING;
+                        break;
+                    case "A":
+                        thisValue = CellValue.BOT_KING;
+                        break;
                     default:
                         thisValue = CellValue.EMPTY;
                         break;
@@ -155,15 +174,11 @@ public class GameModel {
                     botPossibleCardDrop[columnB][rowB] = true;
             }
         }
-//        pacmanLocation = new Point2D(pacmanRow, pacmanColumn);
-//        pacmanVelocity = new Point2D(0,0);
-//        ghost1Location = new Point2D(ghost1Row,ghost1Column);
-//        ghost1Velocity = new Point2D(-1, 0);
-//        ghost2Location = new Point2D(ghost2Row,ghost2Column);
-//        ghost2Velocity = new Point2D(-1, 0);
-//        currentDirection = Direction.NONE;
-//        lastDirection = Direction.NONE;
     }
+
+    /**
+     * Move characters.
+     */
     public void moveCharacters() {
         for (GameCharacter gameCharacter:gameCharacters) {
             gameCharacter.moveCharacter();
@@ -220,75 +235,117 @@ public class GameModel {
                 }
             }
         }
-//        for (GameCharacter gameCharacter : gameCharactersLeft) {
-//            gameCharacter.moveCharacter();
-//            if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationUser)){
-//                gameCharacter.setDestination(leftSecondDestinationUser);
-//            }
-//            else if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationUser)){
-//                gameCharacter.setDestination(leftThirdDestinationUser);
-//            }
-//        }
-//        for (GameCharacter gameCharacter : gameCharactersRight) {
-//            gameCharacter.moveCharacter();
-//            if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationUser)){
-//                gameCharacter.setDestination(rightSecondDestinationUser);
-//            }
-//            else if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationUser)){
-//                gameCharacter.setDestination(rightThirdDestinationUser);
-//            }
-//        }
     }
+
+    /**
+     * Add to right user.
+     *
+     * @param gameCharacter the game character
+     */
     public void addToRightUser(GameCharacter gameCharacter){
         gameCharacter.setDestination(rightFirstDestinationUser);
         gameCharactersRightUser.add(gameCharacter);
         gameCharactersRight.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
+
+    /**
+     * Add to left user.
+     *
+     * @param gameCharacter the game character
+     */
     public void addToLeftUser(GameCharacter gameCharacter){
         gameCharacter.setDestination(leftFirstDestinationUser);
         gameCharactersLeftUser.add(gameCharacter);
         gameCharactersLeft.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
+
+    /**
+     * Add to right bot.
+     *
+     * @param gameCharacter the game character
+     */
     public void addToRightBot(GameCharacter gameCharacter){
         gameCharacter.setDestination(rightFirstDestinationBot);
         gameCharactersRightBot.add(gameCharacter);
         gameCharactersRight.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
+
+    /**
+     * Add to left bot.
+     *
+     * @param gameCharacter the game character
+     */
     public void addToLeftBot(GameCharacter gameCharacter){
         gameCharacter.setDestination(leftFirstDestinationBot);
         gameCharactersLeftBot.add(gameCharacter);
         gameCharactersLeft.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
+
     /**
-     * @param row
-     * @param column
+     * Gets cell value.
+     *
+     * @param column the column
+     * @param row    the row
      * @return the Cell Value of cell (row, column)
      */
     public CellValue getCellValue(int column, int row) {
         assert column >= 0 && column < this.grid.length && row >= 0 && row < this.grid[0].length;
         return this.grid[column][row];
     }
+
+    /**
+     * Is you won boolean.
+     *
+     * @return the boolean
+     */
     public static boolean isYouWon() {
         return youWon;
     }
 
+    /**
+     * Is move able boolean.
+     *
+     * @param column the column
+     * @param row    the row
+     * @return the boolean
+     */
     public boolean isMoveAble(int column, int row){
         if (getCellValue(column,row) == CellValue.RIVER)
             return false;
         return true;
     }
 
+    /**
+     * Gets game characters.
+     *
+     * @return the game characters
+     */
     public ArrayList<GameCharacter> getGameCharacters() {
         return gameCharacters;
     }
 
+    /**
+     * Is droppable user boolean.
+     *
+     * @param column the column
+     * @param row    the row
+     * @return the boolean
+     */
     public boolean isDroppableUser(int column, int row){
         return userPossibleCardDrop[column][row];
     }
+
+    /**
+     * Is droppable bot boolean.
+     *
+     * @param x the x
+     * @param y the y
+     * @return the boolean
+     */
     public boolean isDroppableBot(int x, int y) {
         return botPossibleCardDrop[x][y];
     }

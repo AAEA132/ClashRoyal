@@ -1,7 +1,5 @@
 package Controller;
 import Model.User;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,110 +7,53 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+ * The controller class for Battle deck page.
+ */
 public class BattleDeckPageController {
 
         private String srcId;
         private String targetId;
 
+        @FXML private ImageView card1;
+        @FXML private ImageView card2;
+        @FXML private ImageView card3;
+        @FXML private ImageView card4;
+        @FXML private ImageView card5;
+        @FXML private ImageView card6;
+        @FXML private ImageView card7;
+        @FXML private ImageView card8;
+        @FXML private ImageView archerCard; //1
+        @FXML private ImageView arrowCard; //2
+        @FXML private ImageView babyDragonCard;//3
+        @FXML private ImageView barbariansCard; //4
+        @FXML private ImageView cannonCard; //5
+        @FXML private ImageView fireballCard; //6
+        @FXML private ImageView giantCard; //7
+        @FXML private ImageView infernoTowerCard; //8
+        @FXML private ImageView miniPEKKACard; //9
+        @FXML private ImageView wizardCard; //10
+        @FXML private ImageView valkyrieCard; //11
+        @FXML private ImageView rageCard; //12
+        @FXML private Button backButton;
 
-        @FXML
-        private ImageView card1;
-
-        @FXML
-        private ImageView card2;
-
-        @FXML
-        private ImageView card3;
-
-        @FXML
-        private ImageView card4;
-
-        @FXML
-        private ImageView card5;
-
-        @FXML
-        private ImageView card6;
-
-        @FXML
-        private ImageView card7;
-
-        @FXML
-        private ImageView card8;
-
-
-        @FXML
-        private ImageView archerCard; //1
-
-        @FXML
-        private ImageView arrowCard; //2
-
-        @FXML
-        private ImageView babyDragonCard;//3
-
-        @FXML
-        private ImageView barbariansCard; //4
-
-        @FXML
-        private ImageView cannonCard; //5
-
-        @FXML
-        private ImageView fireballCard; //6
-
-        @FXML
-        private ImageView giantCard; //7
-
-        @FXML
-        private ImageView infernoTowerCard; //8
-
-        @FXML
-        private ImageView miniPEKKACard; //9
-
-        @FXML
-        private ImageView wizardCard; //10
-
-        @FXML
-        private ImageView valkyrieCard; //11
-
-        @FXML
-        private ImageView rageCard; //12
-
-        @FXML
-        private Button backButton;
-
-        @FXML
-        void back(ActionEvent event) {
-                try {
-                        Stage stage;
-                        Parent root;
-                        stage = (Stage) backButton.getScene().getWindow();
-                        root = FXMLLoader.load(getClass().getResource("../View/mainpage.fxml"));
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.show();
-                }catch (Exception e){
-                        e.printStackTrace();
-                        e.getCause();
-                }
-        }
+        /**
+         * Initialize method of javaFx.
+         * First it does a query on database and adds previous battle deck (saved on database) to the cards field of the User class
+         * then it sets the battle deck images on image views and disables the source image views which their card is present in battle deck already
+         */
         public void initialize(){
                 DatabaseConnection databaseConnection = new DatabaseConnection();
                 Connection connectDB = databaseConnection.getConnection();
-//                String insertFields = "UPDATE users SET "+ targetId + " = " + id + " WHERE username = '" + User.username + "'";
-//                String insertValues = id + "')";
-//                String insertToRegister = insertFields + insertValues;
                 try {
                         Statement statement = connectDB.createStatement();
                         ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username LIKE '" + User.username + "'" );
-//                        statement.executeUpdate(insertFields);
-//                        Source.setText("Updated");
                         resultSet.next();
                         for (int i = 0; i < 8; i++) {
                                 User.cards[i] = resultSet.getInt("card"+(i+1));
@@ -187,69 +128,36 @@ public class BattleDeckPageController {
                                         rageCard.setDisable(true);
                                 }
                         }
-//                        resultSet.next();
-//                        User.cards[0] = resultSet.getInt("card1");
-//                        User.cards[1] = resultSet.getInt("card2");
-//                        User.cards[2] = resultSet.getInt("card3");
-//                        User.cards[3] = resultSet.getInt("card4");
-//                        User.cards[4] = resultSet.getInt("card5");
-//                        User.cards[5] = resultSet.getInt("card6");
-//                        User.cards[6] = resultSet.getInt("card7");
-//                        User.cards[7] = resultSet.getInt("card8");
-//                        ImageView card = new ImageView();
-//                        for (int i = 0; i < 8; i++) {
-//                                for (int j = 0; j < 8; j++) {
-//                                        String cardI = "card" + (j+1);
-//                                        if (card1.getId().equals(cardI))
-//                                                card = card1;
-//                                        if (card2.getId().equals(cardI))
-//                                                card = card2;
-//                                        if (card3.getId().equals(cardI))
-//                                                card = card3;
-//                                        if (card4.getId().equals(cardI))
-//                                                card = card4;
-//                                        if (card5.getId().equals(cardI))
-//                                                card = card5;
-//                                        if (card6.getId().equals(cardI))
-//                                                card = card6;
-//                                        if (card7.getId().equals(cardI))
-//                                                card = card7;
-//                                        if (card8.getId().equals(cardI))
-//                                                card = card8;
-//                                        if (User.cards[i] == 1)
-//                                                card.setImage(archerCard.getImage());
-//                                        if (User.cards[i] == 2)
-//                                                card.setImage(arrowCard.getImage());
-//                                        if (User.cards[i] == 3)
-//                                                card.setImage(babyDragonCard.getImage());
-//                                        if (User.cards[i] == 4)
-//                                                card.setImage(barbariansCard.getImage());
-//                                        if (User.cards[i] == 5)
-//                                                card.setImage(cannonCard.getImage());
-//                                        if (User.cards[i] == 6)
-//                                                card.setImage(fireballCard.getImage());
-//                                        if (User.cards[i] == 7)
-//                                                card.setImage(giantCard.getImage());
-//                                        if (User.cards[i] == 8)
-//                                                card.setImage(infernoTowerCard.getImage());
-//                                        if (User.cards[i] == 9)
-//                                                card.setImage(miniPEKKACard.getImage());
-//                                        if (User.cards[i] == 10)
-//                                                card.setImage(wizardCard.getImage());
-//                                        if (User.cards[i] == 11)
-//                                                card.setImage(valkyrieCard.getImage());
-//                                        if (User.cards[i] == 12)
-//                                                card.setImage(rageCard.getImage());
-//                                }
-//                        }
                 }catch (Exception e){
                         e.printStackTrace();
                         e.getCause();
                 }
         }
 
+        /**
+         * Back function for backButton.
+         * moves back to main page
+         */
+        @FXML void back() {
+                try {
+                        Stage stage;
+                        Parent root;
+                        stage = (Stage) backButton.getScene().getWindow();
+                        root = FXMLLoader.load(getClass().getResource("../View/mainpage.fxml"));
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                }catch (Exception e){
+                        e.printStackTrace();
+                        e.getCause();
+                }
+        }
 
-
+        /**
+         * Drag over handler.
+         *
+         * @param event the event
+         */
         @FXML
         protected void dragOverHandler(DragEvent event) {
                 if (event.getDragboard().hasImage()) {
@@ -257,11 +165,17 @@ public class BattleDeckPageController {
                 }
                 event.consume();
         }
+
+        /**
+         * Drag dropped handler.
+         * Sets target's image view to dropped image and disables the source, also enables the source of the previous image in that image view if
+         * there is any; also updates cards field of class User and data base
+         *
+         * @param event the event
+         */
         @FXML
         protected void dragDroppedHandler(DragEvent event){
-//                List<File> files = event.getDragboard().getFiles();
                 try {
-//                        Image image = new Image(new FileInputStream(files.get(0)));
                         Image image = event.getDragboard().getImage();
                         ImageView imageView = (ImageView) event.getTarget();
 
@@ -310,7 +224,7 @@ public class BattleDeckPageController {
                                 giantCard.setDisable(true);
                         if (dragSrc==8)
                                 infernoTowerCard.setDisable(true);
-                        if (dragSrc==0)
+                        if (dragSrc==9)
                                 miniPEKKACard.setDisable(true);
                         if (dragSrc==10)
                                 wizardCard.setDisable(true);
@@ -331,6 +245,11 @@ public class BattleDeckPageController {
                 event.consume();
         }
 
+        /**
+         * On drag detected handler.
+         *
+         * @param event the event
+         */
         @FXML
         protected void onDragDetectedHandler(MouseEvent event){
                 ImageView imageView = (ImageView) event.getSource();
@@ -342,18 +261,20 @@ public class BattleDeckPageController {
                 event.consume();
         }
 
+        /**
+         * Updates database and cards field of class User
+         * @param srcId fxId of the image view which was dragged from
+         * @param targetId fxId of the image view which is dropped on
+         */
         private void update(String srcId, String targetId) {
                 int id = getId(srcId);
                 DatabaseConnection databaseConnection = new DatabaseConnection();
                 Connection connectDB = databaseConnection.getConnection();
                 String insertFields = "UPDATE users SET "+ targetId + " = " + id + " WHERE username = '" + User.username + "'";
-//                String insertValues = id + "')";
-//                String insertToRegister = insertFields + insertValues;
                 try {
                         Statement statement = connectDB.createStatement();
                         statement.executeUpdate(insertFields);
                         User.cards[getTID(targetId)] = id;
-//                        Source.setText("Updated");
                 }catch (Exception e){
                         e.printStackTrace();
                         e.getCause();

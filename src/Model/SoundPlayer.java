@@ -8,7 +8,7 @@ public class SoundPlayer {
     Clip clip;
     private static boolean isMute = false;
     private String status = "paused";
-    private static SoundPlayer beginning, chomp, eightBit, death, fruitEating, ghostEating, main;
+    private static SoundPlayer main, battle;
 
     public SoundPlayer(String filePath, int loop) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
@@ -29,14 +29,6 @@ public class SoundPlayer {
             soundPlayer.play();
     }
 
-    public static void toggleMute() {
-        isMute = !isMute;
-        if (eightBit.status.equals("paused"))
-            eightBit.play();
-        else
-            eightBit.stop();
-    }
-
     private void play() {
         status = "play";
         clip.start();
@@ -52,18 +44,10 @@ public class SoundPlayer {
         if (isMute)
             return null;
         switch (name) {
-            case "chomp":
-                return chomp;
-            case "beginning":
-                return beginning;
-            case "8bit":
-                return eightBit;
-            case "die":
-                return death;
-            case "fruit-eating":
-                return fruitEating;
-            case "ghost-eating":
-                return ghostEating;
+            case "main":
+                return main;
+            case "battle":
+                return battle;
         }
         return null;
     }
@@ -71,18 +55,8 @@ public class SoundPlayer {
     public static void initializeGameSounds() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         main = new SoundPlayer("./src/main-music.wav",-1);
         main.play();
-//        eightBit = new SoundPlayer("./src/main/resources/sounds/8bit.wav", -1);
-//        eightBit.play();
-//        beginning = new SoundPlayer("./src/main/resources/sounds/pacman_beginning.wav", 0);
-//        beginning.play();
-//        chomp = new SoundPlayer("./src/main/resources/sounds/pacman_chomp.wav", 0);
-//        chomp.stop();
-//        fruitEating = new SoundPlayer("./src/main/resources/sounds/pacman_eatfruit.wav", 0);
-//        fruitEating.stop();
-//        ghostEating = new SoundPlayer("./src/main/resources/sounds/pacman_eatghost.wav", 0);
-//        ghostEating.stop();
-//        death = new SoundPlayer("./src/main/resources/sounds/pacman_death.wav", 0);
-//        death.stop();
+        battle = new SoundPlayer("./src/Music_2min_loop_battle_03(1).wav",-1);
+        battle.stop();
     }
 
     public Clip getClip() {

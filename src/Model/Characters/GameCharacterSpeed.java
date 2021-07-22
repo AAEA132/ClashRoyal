@@ -1,5 +1,19 @@
 package Model.Characters;
 
+/**
+ * The enum Game character speed.
+ */
 public enum GameCharacterSpeed {
-    MEDIUM, FAST, SLOW
+    /**
+     * Medium game character speed.
+     */
+    MEDIUM,
+    /**
+     * Fast game character speed.
+     */
+    FAST,
+    /**
+     * Slow game character speed.
+     */
+    SLOW
 }

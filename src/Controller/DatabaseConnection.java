@@ -1,12 +1,21 @@
 package Controller;
-import com.mysql.jdbc.Driver;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * The type Database connection class.
+ */
 public class DatabaseConnection {
+    /**
+     * The Database link.
+     */
     public Connection databaseLink;
 
+    /**
+     * Get connection method.
+     *
+     * @return the connection to database
+     */
     public Connection getConnection(){
         String databaseName = "clashroyaluserdb";
         String databaseUser = "M";

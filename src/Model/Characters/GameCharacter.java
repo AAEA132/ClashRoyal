@@ -4,36 +4,70 @@ import Model.GameModel;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
-import Model.GameModel.CellValue;
-import java.util.Random;
 
+/**
+ * The type Game character.
+ */
 public class GameCharacter {
+    /**
+     * The enum Direction.
+     */
     public enum Direction {
-        UP, DOWN, LEFT, RIGHT, NONE, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT
+        /**
+         * Up direction.
+         */
+        UP,
+        /**
+         * Down direction.
+         */
+        DOWN,
+        /**
+         * Left direction.
+         */
+        LEFT,
+        /**
+         * Right direction.
+         */
+        RIGHT,
+        /**
+         * None direction.
+         */
+        NONE,
+        /**
+         * Up right direction.
+         */
+        UP_RIGHT,
+        /**
+         * Up left direction.
+         */
+        UP_LEFT,
+        /**
+         * Down right direction.
+         */
+        DOWN_RIGHT,
+        /**
+         * Down left direction.
+         */
+        DOWN_LEFT
     };
     private Point2D characterLocation;
     private Point2D characterVelocity;
-
     private static Direction lastDirection;
     private static Direction currentDirection;
-
     private GameCharacterSpeed speed;
     private double speedD;
-
     private ImageView imageView;
-
     private Point2D destination;
-
-    public Point2D getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Point2D destination) {
-        this.destination = destination;
-    }
-
     private GameModel gameModel;
 
+    /**
+     * Instantiates a new Game character.
+     *
+     * @param characterLocation the character location
+     * @param imageView         the image view
+     * @param gameModel         the game model
+     * @param speed             the speed
+     */
     public GameCharacter(Point2D characterLocation, ImageView imageView, GameModel gameModel, GameCharacterSpeed speed) {
         this.characterLocation = characterLocation;
         this.imageView = imageView;
@@ -41,7 +75,6 @@ public class GameCharacter {
         this.speed = speed;
         this.speedD = getSpeedInt(speed);
     }
-
     private double getSpeedInt(GameCharacterSpeed speed) {
         if (speed == GameCharacterSpeed.FAST)
             return 1;
@@ -51,36 +84,12 @@ public class GameCharacter {
             return 0.25;
     }
 
-    public Direction intToDirection(int x){
-        if (x == 0){
-            return Direction.LEFT;
-        }
-        else if (x == 1){
-            return Direction.RIGHT;
-        }
-        else if(x == 2){
-            return Direction.UP;
-        }
-        else if(x == 3){
-            return Direction.DOWN;
-        }
-        else if(x == 4){
-            return Direction.UP_RIGHT;
-        }
-        else if(x == 5){
-            return Direction.UP_LEFT;
-        }
-        else if(x == 6){
-            return Direction.DOWN_RIGHT;
-        }
-        else if(x == 7){
-            return Direction.DOWN_LEFT;
-        }
-        else{
-            return Direction.NONE;
-        }
-    }
-
+    /**
+     * Change velocity point 2 d.
+     *
+     * @param direction the direction
+     * @return the point 2 d
+     */
     public Point2D changeVelocity(Direction direction){
         if(direction == Direction.LEFT){
             return new Point2D(-speedD,0);
@@ -110,49 +119,11 @@ public class GameCharacter {
             return new Point2D(0,0);
         }
     }
-    public static Direction getCurrentDirection() {
-        return currentDirection;
-    }
 
-    public void setCurrentDirection(Direction direction) {
-        currentDirection = direction;
-    }
-
-    public static Direction getLastDirection() {
-        return lastDirection;
-    }
-
-    public void setLastDirection(Direction direction) {
-        lastDirection = direction;
-    }
-
-    public Point2D getCharacterVelocity() {
-        return characterVelocity;
-    }
-
-    public void setCharacterVelocity(Point2D characterVelocity) {
-        this.characterVelocity = characterVelocity;
-    }
-
-    public Point2D getCharacterLocation() {
-        return characterLocation;
-    }
-
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    //    public void moveCharacter() {
-//        Point2D[] character1Data = moveAGhost(ghost1Velocity, ghost1Location);
-//        ghost1Velocity = ghost1Data[0];
-//        ghost1Location = ghost1Data[1];
-//        ghost2Velocity = ghost2Data[0];
-//        ghost2Location = ghost2Data[1];
-//
-//    }
-
+    /**
+     * Move character.
+     */
     public void moveCharacter(){
-            //check if ghost is in PacMan's column and move towards him
             if (characterLocation.getY() == destination.getY()) {
                 if (characterLocation.getX() > destination.getX()) {
                     characterVelocity = changeVelocity(Direction.LEFT);
@@ -165,7 +136,6 @@ public class GameCharacter {
                     characterLocation = potentialLocation;
                 }
             }
-            //check if ghost is in PacMan's row and move towards him
             else if (characterLocation.getX() == destination.getX()) {
                 if (characterLocation.getY() > destination.getY()) {
                     characterVelocity = changeVelocity(Direction.DOWN);
@@ -202,11 +172,96 @@ public class GameCharacter {
                     characterLocation = potentialLocation;
                 }
             }
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                imageView.setId(characterLocation.getX()+"#"+characterLocation.getY());
-            }
-        });
+        Platform.runLater(() -> imageView.setId(characterLocation.getX()+"#"+characterLocation.getY()));
+    }
+
+    /**
+     * Gets destination.
+     *
+     * @return the destination
+     */
+    public Point2D getDestination() {
+        return destination;
+    }
+
+    /**
+     * Sets destination.
+     *
+     * @param destination the destination
+     */
+    public void setDestination(Point2D destination) {
+        this.destination = destination;
+    }
+
+    /**
+     * Gets current direction.
+     *
+     * @return the current direction
+     */
+    public static Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
+    /**
+     * Sets current direction.
+     *
+     * @param direction the direction
+     */
+    public void setCurrentDirection(Direction direction) {
+        currentDirection = direction;
+    }
+
+    /**
+     * Gets last direction.
+     *
+     * @return the last direction
+     */
+    public static Direction getLastDirection() {
+        return lastDirection;
+    }
+
+    /**
+     * Sets last direction.
+     *
+     * @param direction the direction
+     */
+    public void setLastDirection(Direction direction) {
+        lastDirection = direction;
+    }
+
+    /**
+     * Gets character velocity.
+     *
+     * @return the character velocity
+     */
+    public Point2D getCharacterVelocity() {
+        return characterVelocity;
+    }
+
+    /**
+     * Sets character velocity.
+     *
+     * @param characterVelocity the character velocity
+     */
+    public void setCharacterVelocity(Point2D characterVelocity) {
+        this.characterVelocity = characterVelocity;
+    }
+
+    /**
+     * Gets character location.
+     *
+     * @return the character location
+     */
+    public Point2D getCharacterLocation() {
+        return characterLocation;
+    }
+
+    /**
+     * Gets image view.
+     *
+     * @return the image view
+     */
+    public ImageView getImageView() {
+        return imageView;
     }
 }

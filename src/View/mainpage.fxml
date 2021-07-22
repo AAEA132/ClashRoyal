@@ -17,7 +17,7 @@
             <Image url="@../Photos/loading_screen_the_flood_4k.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="profileBotton" layoutX="39.0" layoutY="143.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Profile" textFill="WHITE">
+      <Button fx:id="profileButton" layoutX="39.0" layoutY="143.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="60.0" prefWidth="150.0" style="-fx-background-radius: 8; -fx-background-color: #ffa600;" text="Profile" textFill="WHITE">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
@@ -37,7 +37,7 @@
             <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="logoutBotton" layoutX="142.0" layoutY="306.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="39.0" prefWidth="118.0" style="-fx-background-radius: 8; -fx-background-color: #c83e3e;" text="Log out" textFill="WHITE">
+      <Button fx:id="logoutButton" layoutX="142.0" layoutY="306.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="39.0" prefWidth="118.0" style="-fx-background-radius: 8; -fx-background-color: #c83e3e;" text="Log out" textFill="WHITE">
          <font>
             <Font name="Arial" size="18.0" />
          </font>

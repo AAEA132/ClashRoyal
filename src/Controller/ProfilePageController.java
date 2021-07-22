@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.User;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,23 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+/**
+ * The controller of Profile page.
+ */
 public class ProfilePageController {
-    @FXML private Label username;
-    @FXML private ImageView level;
-    @FXML private ImageView card1;
-    @FXML private ImageView card2;
-    @FXML private ImageView card3;
-    @FXML private ImageView card4;
-    @FXML private ImageView card5;
-    @FXML private ImageView card6;
-    @FXML private ImageView card7;
-    @FXML private ImageView card8;
-    @FXML private Label avgElixirCostLabel;
     private Image archers;
     private Image arrows;
     private Image babyDragon;
@@ -41,11 +30,22 @@ public class ProfilePageController {
     private Image valkyrie;
     private Image wizard;
     private Double totalCost = 0.0;
-    @FXML
-    private Button backButton;
-
-    @FXML
-    void actionHandler(ActionEvent event) {
+    @FXML private Label username;
+    @FXML private ImageView level;
+    @FXML private ImageView card1;
+    @FXML private ImageView card2;
+    @FXML private ImageView card3;
+    @FXML private ImageView card4;
+    @FXML private ImageView card5;
+    @FXML private ImageView card6;
+    @FXML private ImageView card7;
+    @FXML private ImageView card8;
+    @FXML private Label avgElixirCostLabel;
+    @FXML private Button backButton;
+    /**
+     * Action handler.
+     */
+    @FXML void actionHandler() {
         try {
             Stage stage;
             Parent root;
@@ -59,7 +59,9 @@ public class ProfilePageController {
             e.getCause();
         }
     }
-
+    /**
+     * Instantiates a new Profile page controller.
+     */
     public ProfilePageController(){
         this.archers = new Image(getClass().getResourceAsStream("/Photos/Card/archers.png"));
         this.arrows = new Image(getClass().getResourceAsStream("/Photos/Card/arrows.png"));
@@ -74,6 +76,9 @@ public class ProfilePageController {
         this.valkyrie = new Image(getClass().getResourceAsStream("/Photos/Card/valkyrie.png"));
         this.wizard = new Image(getClass().getResourceAsStream("/Photos/Card/wizard.png"));
     }
+    /**
+     * Sets all battle deck image views and labels like username and avg elixir cost of deck by getting the battle deck from database
+     */
     public void initialize(){
         username.setText(User.username);
         DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -92,7 +97,6 @@ public class ProfilePageController {
         for (int i = 0; i < 8; i++) {
             String cardI = "card"+(i+1);
             ImageView card = null;
-
             if (card1.getId().equals(cardI))
                 card = card1;
             else if (card2.getId().equals(cardI))
@@ -109,7 +113,6 @@ public class ProfilePageController {
                 card = card7;
             else if (card8.getId().equals(cardI))
                 card = card8;
-
             if (User.cards[i] == 1) {
                 card.setImage(archers);
                 totalCost+=3;

@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
@@ -48,7 +50,12 @@ public class SignUpController {
     }
     @FXML
     protected void SignUpPressed(ActionEvent event) {
-        registerUser();
+        if (usernameField.getText().isBlank() == false && passField.getText().isBlank() == false && rePassField.getText().isBlank() == false){
+            registerUser();
+        }
+        else {
+            massageLable.setText("Pleas enter your username & password! Don't Leave any field blank");
+        }
     }
     @FXML
     protected void LoginPressed(ActionEvent event) {
@@ -118,29 +125,33 @@ public class SignUpController {
 //    }
 //}
     protected void registerUser(){
-        if (passField.getText().equals(rePassField.getText())){
-//            massageLable.setText("You are set");
-        } else {
+        if (!passField.getText().equals(rePassField.getText())){
             massageLable.setText("Password does not match");
         }
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connectDB= databaseConnection.getConnection();
-//        String firstname = "test";
-//        String lastname = "test";
-        String username = usernameField.getText();
-        String password = passField.getText();
+        else {
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            Connection connectDB = databaseConnection.getConnection();
+            String username = usernameField.getText();
+            String password = passField.getText();
 
-        String insertFields = "INSERT INTO users (username, password) VALUES ('";
-        String insertValues = username + "','" + password + "')";
-        String insertToRegister = insertFields + insertValues;
-
-        try {
-            Statement statement = connectDB.createStatement();
-            statement.executeUpdate(insertToRegister);
-            massageLable.setText("Signed up successfully");
-        }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
+            try {
+                Statement statement = connectDB.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username LIKE '" + username + "'");
+                if (!resultSet.next()){
+                    String insertFields = "INSERT INTO users (username, password) VALUES ('";
+                    String insertValues = username + "','" + password + "')";
+                    String insertToRegister = insertFields + insertValues;
+                    Statement statement2 = connectDB.createStatement();
+                    statement2.executeUpdate(insertToRegister);
+                    massageLable.setText("Signed up successfully");
+                }
+                else if (resultSet.getString("username").equals(username)) {
+                    massageLable.setText("User with this username exists, pls choose another username");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+            }
         }
     }
 }

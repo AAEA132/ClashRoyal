@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import java.io.IOException;
 import java.sql.Statement;
@@ -25,7 +26,7 @@ public class MainPageController {
     private Button trainingCampButton;
 
     @FXML
-    private Button battleBotton;
+    private Button logoutBotton;
 
     @FXML
     void actionHandler(ActionEvent event) throws IOException {
@@ -37,6 +38,24 @@ public class MainPageController {
         }
         else if (event.getSource() == profileBotton){
             profile();
+        }
+        else if (event.getSource() == logoutBotton){
+            logout();
+        }
+    }
+
+    private void logout() {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) profileBotton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../View/loginpage.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
         }
     }
 

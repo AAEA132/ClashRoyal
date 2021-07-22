@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,7 @@
             <Image url="@../Photos/tiled-background-silver.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="28.0" fitWidth="200.0" layoutX="100.0" layoutY="23.0">
+      <ImageView fitHeight="28.0" fitWidth="200.0" layoutX="100.0" layoutY="69.0">
          <image>
             <Image url="@../Photos/playerProfile.png" />
          </image>
@@ -55,5 +56,19 @@
             <Image url="@../Photos/elixir.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="126.0" layoutX="136.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Photos/clashroyale_logo.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="backButton" layoutX="27.0" layoutY="30.0" mnemonicParsing="false">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../Photos/left-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

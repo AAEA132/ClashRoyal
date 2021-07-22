@@ -1,6 +1,7 @@
 package Model.Characters;
 
 import Model.GameModel;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import Model.GameModel.CellValue;
@@ -16,6 +17,9 @@ public class GameCharacter {
     private static Direction lastDirection;
     private static Direction currentDirection;
 
+    private GameCharacterSpeed speed;
+    private double speedD;
+
     private ImageView imageView;
 
     private Point2D destination;
@@ -30,10 +34,21 @@ public class GameCharacter {
 
     private GameModel gameModel;
 
-    public GameCharacter(Point2D characterLocation, ImageView imageView, GameModel gameModel) {
+    public GameCharacter(Point2D characterLocation, ImageView imageView, GameModel gameModel, GameCharacterSpeed speed) {
         this.characterLocation = characterLocation;
         this.imageView = imageView;
         this.gameModel = gameModel;
+        this.speed = speed;
+        this.speedD = getSpeedInt(speed);
+    }
+
+    private double getSpeedInt(GameCharacterSpeed speed) {
+        if (speed == GameCharacterSpeed.FAST)
+            return 1;
+        else if (speed == GameCharacterSpeed.MEDIUM)
+            return 0.5;
+        else
+            return 0.25;
     }
 
     public Direction intToDirection(int x){
@@ -68,28 +83,28 @@ public class GameCharacter {
 
     public Point2D changeVelocity(Direction direction){
         if(direction == Direction.LEFT){
-            return new Point2D(-1,0);
+            return new Point2D(-speedD,0);
         }
         else if(direction == Direction.RIGHT){
-            return new Point2D(1,0);
+            return new Point2D(speedD,0);
         }
         else if(direction == Direction.UP){
-            return new Point2D(0,1);
+            return new Point2D(0,speedD);
         }
         else if(direction == Direction.UP_RIGHT){
-            return new Point2D(1,1);
+            return new Point2D(speedD,speedD);
         }
         else if(direction == Direction.UP_LEFT){
-            return new Point2D(-1,1);
+            return new Point2D(-speedD,speedD);
         }
         else if(direction == Direction.DOWN){
-            return new Point2D(0,-1);
+            return new Point2D(0,-speedD);
         }
         else if(direction == Direction.DOWN_RIGHT){
-            return new Point2D(1,-1);
+            return new Point2D(speedD,-speedD);
         }
         else if(direction == Direction.DOWN_LEFT){
-            return new Point2D(-1,-1);
+            return new Point2D(-speedD,-speedD);
         }
         else{
             return new Point2D(0,0);
@@ -109,6 +124,14 @@ public class GameCharacter {
 
     public void setLastDirection(Direction direction) {
         lastDirection = direction;
+    }
+
+    public Point2D getCharacterVelocity() {
+        return characterVelocity;
+    }
+
+    public void setCharacterVelocity(Point2D characterVelocity) {
+        this.characterVelocity = characterVelocity;
     }
 
     public Point2D getCharacterLocation() {
@@ -179,5 +202,11 @@ public class GameCharacter {
                     characterLocation = potentialLocation;
                 }
             }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setId(characterLocation.getX()+"#"+characterLocation.getY());
+            }
+        });
     }
 }

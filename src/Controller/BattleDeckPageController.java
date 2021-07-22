@@ -1,10 +1,17 @@
 package Controller;
 import Model.User;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -78,11 +85,23 @@ public class BattleDeckPageController {
         private ImageView rageCard; //12
 
         @FXML
-        private Label Source;
+        private Button backButton;
 
         @FXML
-        private Label  Target;
-
+        void back(ActionEvent event) {
+                try {
+                        Stage stage;
+                        Parent root;
+                        stage = (Stage) backButton.getScene().getWindow();
+                        root = FXMLLoader.load(getClass().getResource("../View/mainpage.fxml"));
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                }catch (Exception e){
+                        e.printStackTrace();
+                        e.getCause();
+                }
+        }
         public void initialize(){
                 DatabaseConnection databaseConnection = new DatabaseConnection();
                 Connection connectDB = databaseConnection.getConnection();
@@ -229,28 +248,8 @@ public class BattleDeckPageController {
                 }
         }
 
-        @FXML
-        void onDragDetectedHandlerText(MouseEvent event) {
-                Dragboard dragboard = Source.startDragAndDrop(TransferMode.MOVE);
-                ClipboardContent clipboardContent = new ClipboardContent();
-                clipboardContent.putString(Source.getText());
-                dragboard.setContent(clipboardContent);
-                event.consume();
-        }
 
-        @FXML
-        void dragOverHandlerText(DragEvent event) {
-                if (event.getDragboard().hasString()) {
-                        event.acceptTransferModes(TransferMode.ANY);
-                }
-                event.consume();
-        }
 
-        @FXML
-        void dragDroppedHandlerText(DragEvent event) {
-                Target.setText(event.getDragboard().getString());
-                event.consume();
-        }
         @FXML
         protected void dragOverHandler(DragEvent event) {
                 if (event.getDragboard().hasImage()) {
@@ -355,8 +354,6 @@ public class BattleDeckPageController {
                         statement.executeUpdate(insertFields);
                         User.cards[getTID(targetId)] = id;
 //                        Source.setText("Updated");
-                        Source.setText(srcId);
-                        Target.setText(targetId);
                 }catch (Exception e){
                         e.printStackTrace();
                         e.getCause();

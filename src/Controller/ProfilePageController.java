@@ -1,10 +1,16 @@
 package Controller;
 
 import Model.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,6 +41,24 @@ public class ProfilePageController {
     private Image valkyrie;
     private Image wizard;
     private Double totalCost = 0.0;
+    @FXML
+    private Button backButton;
+
+    @FXML
+    void actionHandler(ActionEvent event) {
+        try {
+            Stage stage;
+            Parent root;
+            stage = (Stage) backButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../View/mainpage.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
 
     public ProfilePageController(){
         this.archers = new Image(getClass().getResourceAsStream("/Photos/Card/archers.png"));

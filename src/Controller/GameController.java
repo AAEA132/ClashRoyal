@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Characters.GameCharacter;
+import Model.Characters.*;
 import Model.GameModel;
 import Model.User;
 import View.GameView;
@@ -109,7 +109,9 @@ public class GameController {
     private Image valkyrie;
     private Image wizard;
     private ArrayList<Image> cards;
+    private int[] botDeck;
     private BigDecimal elixirAmountDivideBy10;
+    private int elixirAmountForBot;
     private int counter = 0;
 
 
@@ -127,6 +129,8 @@ public class GameController {
 
     public GameController() {
         cards = new ArrayList<>();
+        botDeck = new int[8];
+        elixirAmountForBot = 4;
         elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",0.0));
         this.archers = new Image(getClass().getResourceAsStream("/Photos/Card/archers.png"));
         this.arrows = new Image(getClass().getResourceAsStream("/Photos/Card/arrows.png"));
@@ -147,10 +151,10 @@ public class GameController {
      */
     public void initialize() {
 
-        second = 0;
+        second = 1;
         minute = 3;
-        setRemainingTimer();
-        remainingTimer.start();
+//        setRemainingTimer();
+//        remainingTimer.start();
 
         elixirBar.setStyle("-fx-accent: purple;");
 
@@ -173,10 +177,25 @@ public class GameController {
         ready4 = setRandomCard(readyCard4);
         next = setRandomCard(nextCard);
         gameModel = new GameModel();
+        setBotBattleDeck();
         update();
 //        pacManModel = new PacManModel();
 //        update(PacManModel.Direction.NONE);
         startTimer();
+    }
+
+    private void setBotBattleDeck() {
+        Random random = new Random();
+        ArrayList<Integer> chooses = new ArrayList<>();
+        while (chooses.size()<9){
+            int id = random.nextInt(12);
+            if (!chooses.contains(id)){
+                chooses.add(id);
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            botDeck[i] = chooses.get(i);
+        }
     }
 
     private int setRandomCard(ImageView imageView) {
@@ -248,19 +267,47 @@ public class GameController {
 //     * @param direction the most recently inputted direction for PacMan to move in
      */
     private void update() {
+        botCardDrop();
         if (counter < 5){
             counter++;
         }
-        else if (counter == 5 ) {
-            if (elixirAmountDivideBy10.doubleValue() < 1 && minute>1) {
+        else if ( counter == 5) {
+
+            if (minute > 0 && second > 0) {
+                second--;
+                ddSecond = decimalFormat.format(second);
+                ddMinute = decimalFormat.format(minute);
+                timerLabel.setText(ddMinute + ":" + ddSecond);
+                if (second == 0) {
+                    second = 59;
+                    minute--;
+                    ddSecond = decimalFormat.format(second);
+                    ddMinute = decimalFormat.format(minute);
+                    timerLabel.setText(ddMinute + ":" + ddSecond);
+                }
+            }
+
+            if (elixirAmountForBot<10 && minute>1){
+                elixirAmountForBot+=1;
+            }
+            else if (elixirAmountForBot<10){
+                elixirAmountForBot+=2;
+            }
+
+            if (elixirAmountDivideBy10.doubleValue() < 1 && minute>0) {
                 elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",elixirAmountDivideBy10.doubleValue() + 0.1));
                 elixirBar.setProgress(elixirAmountDivideBy10.doubleValue());
                 elixirLabel.setText(Integer.toString((int) Math.round(elixirAmountDivideBy10.doubleValue() * 10)));
             }
-            else if (elixirAmountDivideBy10.doubleValue() < 1 && minute<=1) {
+            else if (elixirAmountDivideBy10.doubleValue() < 1 && minute<=0) {
                 elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",elixirAmountDivideBy10.doubleValue() + 0.2));
                 elixirBar.setProgress(elixirAmountDivideBy10.doubleValue());
-                elixirLabel.setText(Integer.toString((int) Math.round(elixirAmountDivideBy10.doubleValue() * 10)));
+                String s = Integer.toString((int) Math.round(elixirAmountDivideBy10.doubleValue() * 10));
+                if (s.equals("11")){
+                    s = "10";
+                    elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",1.0));
+                }
+                elixirLabel.setText(s);
             }
             counter = 0;
         }
@@ -285,6 +332,160 @@ public class GameController {
 //            pacManModel.setGhostEatingMode(false);
 //        }
     }
+
+    private void botCardDrop() {
+        Random random = new Random();
+        int drop = random.nextInt(5);
+        if (drop == 1) {
+            drop = random.nextInt(8);
+            drop = botDeck[drop];
+            if (elixirAmountForBot >= getElexir(drop)) {
+                boolean p = true;
+                while (p) {
+                    int x = random.nextInt(17);
+                    int y = random.nextInt(31);
+
+                    if (drop == 2 || drop == 6 || drop == 12){
+                        if (y!=15 && y!=16){
+                            elixirAmountForBot -= getElexir(drop);
+                            Image image = getImage(drop);
+                            ImageView imageView = new ImageView(image);
+                            imageView.setId(x+"#"+y);
+                            GameCharacter gameCharacter = new GameSpell(new Point2D(x, y), imageView, gameModel);
+                            if (x > 8) {
+                                gameModel.addToRightBot(gameCharacter);
+                            } else {
+                                gameModel.addToLeftBot(gameCharacter);
+                            }
+                            imageView.setX(x);
+                            imageView.setY(y);
+                            imageView.setFitHeight(30);
+                            imageView.setFitWidth(30);
+                            imageView.setVisible(true);
+                            gameView.getChildren().add(imageView);
+                            p = false;
+                        }
+                    }
+                    else if (drop == 5 || drop == 8){
+                        if (gameModel.isDroppableBot(x, y)){
+                            elixirAmountForBot -= getElexir(drop);
+                            Image image = getImage(drop);
+                            ImageView imageView = new ImageView(image);
+                            imageView.setId(x+"#"+y);
+
+                            GameCharacter gameCharacter = new GameBuilding(new Point2D(x, y), imageView, gameModel);
+                            if (x > 8) {
+                                gameModel.addToRightBot(gameCharacter);
+                            } else {
+                                gameModel.addToLeftBot(gameCharacter);
+                            }
+                            imageView.setX(x);
+                            imageView.setY(y);
+                            imageView.setFitHeight(30);
+                            imageView.setFitWidth(30);
+                            imageView.setVisible(true);
+                            gameView.getChildren().add(imageView);
+                            p = false;
+                        }
+                    }
+                    else if (drop==1 || drop==3 || drop==4 || drop==7 || drop==9 || drop==10 || drop==11){
+                        if (gameModel.isDroppableBot(x, y)){
+                            elixirAmountForBot -= getElexir(drop);
+
+                            Image image = getImage(drop);
+                            ImageView imageView = new ImageView(image);
+                            imageView.setId(x+"#"+y);
+                            GameCharacter gameCharacter;
+                            if (drop==1){
+                                 gameCharacter = new GameArcher(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else if (drop==3){
+                                gameCharacter = new GameBabyDragon(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else if (drop==4){
+                                gameCharacter = new GameBarbarian(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else if (drop==7){
+                                gameCharacter = new GameGiant(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else if (drop==9){
+                                gameCharacter = new GameMiniPEKKA(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else if (drop==10){
+                                gameCharacter = new GameWizard(new Point2D(x, y), imageView, gameModel);
+                            }
+                            else {
+                                gameCharacter = new GameValkyrie(new Point2D(x, y), imageView, gameModel);
+                            }
+//                            GameCharacter gameCharacter = new GameTroop(new Point2D(x, y), imageView, gameModel);
+                            if (x > 8) {
+                                gameModel.addToRightBot(gameCharacter);
+                            } else {
+                                gameModel.addToLeftBot(gameCharacter);
+                            }
+                            imageView.setX(x);
+                            imageView.setY(y);
+                            imageView.setFitHeight(30);
+                            imageView.setFitWidth(30);
+                            imageView.setVisible(true);
+                            gameView.getChildren().add(imageView);
+                            p = false;
+                        }
+                    }
+//                    if ((drop == 2 || drop == 6 || drop == 12) && (y!=15 && y!=16)){
+//                        elixirAmountForBot -= getElexir(drop);
+//                        Image image = getImage(drop);
+//                        ImageView imageView = new ImageView(image);
+//                        imageView.setId(x+"#"+y);
+//                        GameCharacter gameCharacter = new GameSpell(new Point2D(x, y), imageView, gameModel);
+//                        if (x > 8) {
+//                            gameModel.addToRightBot(gameCharacter);
+//                        } else {
+//                            gameModel.addToLeftBot(gameCharacter);
+//                        }
+//                        imageView.setX(x);
+//                        imageView.setY(y);
+//                        imageView.setFitHeight(30);
+//                        imageView.setFitWidth(30);
+//                        imageView.setVisible(true);
+//                        gameView.getChildren().add(imageView);
+//                        p = false;
+//                    }
+//                    else if (gameModel.isDroppableBot(x, y)) {
+//                        elixirAmountForBot -= getElexir(drop);
+//
+//                        Image image = getImage(drop);
+//                        ImageView imageView = new ImageView(image);
+//                        imageView.setId(x+"#"+y);
+//
+//                        GameCharacter gameCharacter;
+//                        if (drop == 5 || drop == 8){
+//                            gameCharacter = new GameBuilding(new Point2D(x, y), imageView, gameModel);
+//                        }
+//                        else {
+//                            gameCharacter = new GameTroop(new Point2D(x, y), imageView, gameModel);
+//                        }
+//                        if (x > 8) {
+//                            gameModel.addToRightBot(gameCharacter);
+//                        } else {
+//                            gameModel.addToLeftBot(gameCharacter);
+//                        }
+//
+////            ImageView imageView = (ImageView) event.getTarget();
+////            imageView.setImage(image);
+//                        imageView.setX(x);
+//                        imageView.setY(y);
+//                        imageView.setFitHeight(30);
+//                        imageView.setFitWidth(30);
+//                        imageView.setVisible(true);
+//                        gameView.getChildren().add(imageView);
+//                        p = false;
+//                    }
+                }
+            }
+        }
+    }
+
     public static String getMapFile()
     {
         return mapFile;
@@ -308,30 +509,53 @@ public class GameController {
             ImageView tile = (ImageView) event.getTarget();
 
             String[] tokens = tile.getId().split("#");
-            if ((elixirAmountDivideBy10.doubleValue()*10) >= getCost(srcId) && gameModel.isDroppableUser(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1]))) {
+            if ((elixirAmountDivideBy10.doubleValue()*10) >= getCost(srcId) && (gameModel.isDroppableUser(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])) ||((getIntId(srcId) == 2 || getIntId(srcId) == 6 || getIntId(srcId) == 12) && (Integer.parseInt(tokens[1]) != 15 && Integer.parseInt(tokens[1]) != 16)))) {
                 elixirAmountDivideBy10 = new BigDecimal(String.format("%.2f",elixirAmountDivideBy10.doubleValue() - (((double)getCost(srcId))/10)));
                 elixirBar.setProgress(elixirAmountDivideBy10.doubleValue());
                 elixirLabel.setText(Integer.toString((int) Math.round(elixirAmountDivideBy10.doubleValue() * 10)));
 
-
-
-
-
-//                elixirLabel.setText(getCost(srcId) + "");
                 Image image = event.getDragboard().getImage();
                 ImageView imageView = new ImageView(image);
+                imageView.setId(tile.getId());
+                GameCharacter gameCharacter;
+                if (getIntId(srcId) == 5 || getIntId(srcId) == 8){
+                    gameCharacter = new GameBuilding(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
 
-
-                GameCharacter gameCharacter = new GameCharacter(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
-                if (Integer.parseInt(tokens[0]) > 8){
-                    gameModel.addToRight(gameCharacter);
+                }
+                else if (getIntId(srcId) == 2 || getIntId(srcId) == 6 || getIntId(srcId) == 12){
+                    gameCharacter = new GameSpell(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
                 }
                 else {
-                    gameModel.addToLeft(gameCharacter);
+                    if (getIntId(srcId) == 1){
+                        gameCharacter = new GameArcher(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else if (getIntId(srcId) == 3){
+                        gameCharacter = new GameBabyDragon(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else if (getIntId(srcId) == 4){
+                        gameCharacter = new GameBarbarian(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else if (getIntId(srcId) == 7){
+                        gameCharacter = new GameGiant(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else if (getIntId(srcId) == 9){
+                        gameCharacter = new GameMiniPEKKA(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else if (getIntId(srcId) == 10){
+                        gameCharacter = new GameWizard(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                    else{
+                        gameCharacter = new GameWizard(new Point2D(Integer.parseInt(tokens[0]),Integer.parseInt(tokens[1])),imageView,gameModel);
+                    }
+                }
+//                elixirLabel.setText(getCost(srcId) + "");
+                if (Integer.parseInt(tokens[0]) > 8){
+                    gameModel.addToRightUser(gameCharacter);
+                }
+                else {
+                    gameModel.addToLeftUser(gameCharacter);
                 }
 
-//            ImageView imageView = (ImageView) event.getTarget();
-//            imageView.setImage(image);
                 imageView.setX((event.getX() - 15));
                 imageView.setY((event.getY()) - 15);
                 imageView.setFitHeight(30);
@@ -388,6 +612,18 @@ public class GameController {
             return getElexir(ready3);
         else if (src.equals(readyCard4.getId()))
             return getElexir(ready4);
+        else
+            return 0;
+    }
+    private int getIntId(String src){
+        if (src.equals(readyCard1.getId()))
+            return ready1;
+        else if (src.equals(readyCard2.getId()))
+            return ready2;
+        else if (src.equals(readyCard3.getId()))
+            return ready3;
+        else if (src.equals(readyCard4.getId()))
+            return ready4;
         else
             return 0;
     }

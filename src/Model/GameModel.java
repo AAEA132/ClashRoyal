@@ -18,9 +18,27 @@ public class GameModel {
     private Point2D leftThirdDestinationUser = new Point2D(8, 0);
     private Point2D rightThirdDestinationUser = new Point2D(9, 0);
 
+
+    private Point2D leftFirstDestinationBot = new Point2D(3,14);
+    private Point2D rightFirstDestinationBot= new Point2D(14, 14);
+
+    private Point2D leftSecondDestinationBot = new Point2D(3,26);
+    private Point2D rightSecondDestinationBot = new Point2D(14, 26);
+
+    private Point2D leftThirdDestinationBot = new Point2D(8, 31);
+    private Point2D rightThirdDestinationBot = new Point2D(9, 31);
+
     private ArrayList<GameCharacter> gameCharacters;
     private ArrayList<GameCharacter> gameCharactersRight;
     private ArrayList<GameCharacter> gameCharactersLeft;
+
+    private ArrayList<GameCharacter> gameCharactersRightUser;
+    private ArrayList<GameCharacter> gameCharactersLeftUser;
+
+    private ArrayList<GameCharacter> gameCharactersRightBot;
+    private ArrayList<GameCharacter> gameCharactersLeftBot;
+
+
 
     public enum CellValue {
         EMPTY, LIGHT_GRASS, DARK_GRASS, ROAD, RIVER, BRIDGE
@@ -30,6 +48,7 @@ public class GameModel {
     private int columnCount;
     private CellValue[][] grid;
     private boolean[][] userPossibleCardDrop;
+    private boolean[][] botPossibleCardDrop;
     private static boolean gameOver;
     private static boolean youWon;
 
@@ -38,6 +57,13 @@ public class GameModel {
         gameCharacters = new ArrayList<>();
         gameCharactersRight = new ArrayList<>();
         gameCharactersLeft = new ArrayList<>();
+
+        gameCharactersRightUser = new ArrayList<>();
+        gameCharactersLeftUser = new ArrayList<>();
+
+        gameCharactersRightBot = new ArrayList<>();
+        gameCharactersLeftBot = new ArrayList<>();
+
         this.startNewGame();
     }
 
@@ -112,12 +138,21 @@ public class GameModel {
             row++;
         }
         userPossibleCardDrop = new boolean[columnCount][rowCount];
-        for (int columnC = 0; columnC < columnCount; columnC++) {
-            for (int rowC = 0; rowC < rowCount; rowC++) {
-                if (rowC<=16)
-                    userPossibleCardDrop[columnC][rowC] = false;
+        for (int columnU = 0; columnU < columnCount; columnU++) {
+            for (int rowU = 0; rowU < rowCount; rowU++) {
+                if (rowU<=16)
+                    userPossibleCardDrop[columnU][rowU] = false;
                 else
-                    userPossibleCardDrop[columnC][rowC] = true;
+                    userPossibleCardDrop[columnU][rowU] = true;
+            }
+        }
+        botPossibleCardDrop = new boolean[columnCount][rowCount];
+        for (int columnB = 0; columnB < columnCount; columnB++) {
+            for (int rowB = 0; rowB < rowCount; rowB++) {
+                if (rowB>14)
+                    botPossibleCardDrop[columnB][rowB] = false;
+                else
+                    botPossibleCardDrop[columnB][rowB] = true;
             }
         }
 //        pacmanLocation = new Point2D(pacmanRow, pacmanColumn);
@@ -130,36 +165,104 @@ public class GameModel {
 //        lastDirection = Direction.NONE;
     }
     public void moveCharacters() {
-        for (GameCharacter gameCharacter : gameCharactersLeft) {
+        for (GameCharacter gameCharacter:gameCharacters) {
             gameCharacter.moveCharacter();
-            if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationUser)){
-                gameCharacter.setDestination(leftSecondDestinationUser);
+            if (gameCharactersRight.contains(gameCharacter)){
+                if (gameCharactersRightUser.contains(gameCharacter)){
+                    if (gameCharacter.getDestination().equals(rightFirstDestinationUser)){
+                        if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationUser)){
+                            gameCharacter.setDestination(rightSecondDestinationUser);
+                        }
+                    }
+                    else if (gameCharacter.getDestination().equals(rightSecondDestinationUser)){
+                        if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationUser)){
+                            gameCharacter.setDestination(rightThirdDestinationUser);
+                        }
+                    }
+                }
+                else if (gameCharactersRightBot.contains(gameCharacter)){
+                    if (gameCharacter.getDestination().equals(rightFirstDestinationBot)){
+                        if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationBot)){
+                            gameCharacter.setDestination(rightSecondDestinationBot);
+                        }
+                    }
+                    else if (gameCharacter.getDestination().equals(rightSecondDestinationBot)){
+                        if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationBot)){
+                            gameCharacter.setDestination(rightThirdDestinationBot);
+                        }
+                    }
+                }
             }
-            else if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationUser)){
-                gameCharacter.setDestination(leftThirdDestinationUser);
+            else if (gameCharactersLeft.contains(gameCharacter)){
+                if (gameCharactersLeftUser.contains(gameCharacter)){
+                    if (gameCharacter.getDestination().equals(leftFirstDestinationUser)){
+                        if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationUser)){
+                            gameCharacter.setDestination(leftSecondDestinationUser);
+                        }
+                    }
+                    else if (gameCharacter.getDestination().equals(leftSecondDestinationUser)){
+                        if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationUser)){
+                            gameCharacter.setDestination(leftThirdDestinationUser);
+                        }
+                    }
+                }
+                else if (gameCharactersLeftBot.contains(gameCharacter)){
+                    if (gameCharacter.getDestination().equals(leftFirstDestinationBot)){
+                        if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationBot)){
+                            gameCharacter.setDestination(leftSecondDestinationBot);
+                        }
+                    }
+                    else if (gameCharacter.getDestination().equals(leftSecondDestinationBot)){
+                        if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationBot)){
+                            gameCharacter.setDestination(leftThirdDestinationBot);
+                        }
+                    }
+                }
             }
         }
-        for (GameCharacter gameCharacter : gameCharactersRight) {
-            gameCharacter.moveCharacter();
-            if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationUser)){
-                gameCharacter.setDestination(rightSecondDestinationUser);
-            }
-            else if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationUser)){
-                gameCharacter.setDestination(rightThirdDestinationUser);
-            }
-        }
+//        for (GameCharacter gameCharacter : gameCharactersLeft) {
+//            gameCharacter.moveCharacter();
+//            if (gameCharacter.getCharacterLocation().equals(leftFirstDestinationUser)){
+//                gameCharacter.setDestination(leftSecondDestinationUser);
+//            }
+//            else if (gameCharacter.getCharacterLocation().equals(leftSecondDestinationUser)){
+//                gameCharacter.setDestination(leftThirdDestinationUser);
+//            }
+//        }
+//        for (GameCharacter gameCharacter : gameCharactersRight) {
+//            gameCharacter.moveCharacter();
+//            if (gameCharacter.getCharacterLocation().equals(rightFirstDestinationUser)){
+//                gameCharacter.setDestination(rightSecondDestinationUser);
+//            }
+//            else if (gameCharacter.getCharacterLocation().equals(rightSecondDestinationUser)){
+//                gameCharacter.setDestination(rightThirdDestinationUser);
+//            }
+//        }
     }
-    public void addToRight(GameCharacter gameCharacter){
+    public void addToRightUser(GameCharacter gameCharacter){
         gameCharacter.setDestination(rightFirstDestinationUser);
+        gameCharactersRightUser.add(gameCharacter);
         gameCharactersRight.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
-    public void addToLeft(GameCharacter gameCharacter){
+    public void addToLeftUser(GameCharacter gameCharacter){
         gameCharacter.setDestination(leftFirstDestinationUser);
+        gameCharactersLeftUser.add(gameCharacter);
         gameCharactersLeft.add(gameCharacter);
         gameCharacters.add(gameCharacter);
     }
-
+    public void addToRightBot(GameCharacter gameCharacter){
+        gameCharacter.setDestination(rightFirstDestinationBot);
+        gameCharactersRightBot.add(gameCharacter);
+        gameCharactersRight.add(gameCharacter);
+        gameCharacters.add(gameCharacter);
+    }
+    public void addToLeftBot(GameCharacter gameCharacter){
+        gameCharacter.setDestination(leftFirstDestinationBot);
+        gameCharactersLeftBot.add(gameCharacter);
+        gameCharactersLeft.add(gameCharacter);
+        gameCharacters.add(gameCharacter);
+    }
     /**
      * @param row
      * @param column
@@ -185,5 +288,8 @@ public class GameModel {
 
     public boolean isDroppableUser(int column, int row){
         return userPossibleCardDrop[column][row];
+    }
+    public boolean isDroppableBot(int x, int y) {
+        return botPossibleCardDrop[x][y];
     }
 }

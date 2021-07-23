@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.ResultSet;
@@ -17,10 +18,10 @@ import java.sql.Connection;
  */
 public class SignUpController {
     @FXML private TextField usernameField;
-    @FXML private TextField passField;
+    @FXML private PasswordField passField;
     @FXML private Button signUpButton;
     @FXML private Button loginLink;
-    @FXML private TextField rePassField;
+    @FXML private PasswordField rePassField;
     @FXML private Label massageLabel;
     /**
      * Action handler.

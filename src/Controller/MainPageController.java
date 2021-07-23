@@ -97,7 +97,7 @@ public class MainPageController {
         loader.load();
         Parent root = loader.getRoot();
         SoundPlayer.stop("main");
-//        SoundPlayer.play("battle");
+        SoundPlayer.play("battle");
         GameController controller = loader.getController();
         System.out.println(controller.getBoardHeight());
         stage.setScene(new Scene(root, 500, 750));

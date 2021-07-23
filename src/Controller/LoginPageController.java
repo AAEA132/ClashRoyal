@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.Connection;
@@ -19,7 +20,7 @@ import java.sql.Statement;
  */
 public class LoginPageController {
     @FXML private TextField usernameField;
-    @FXML private TextField passField;
+    @FXML private PasswordField passField;
     @FXML private Button loginButton;
     @FXML private Button signUpLink;
     @FXML private Label loginLabel;
